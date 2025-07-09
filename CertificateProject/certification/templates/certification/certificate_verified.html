@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verification Result</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/static/images/back.png'); /* 🔁 Adjust image path */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            color: #fff;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        .status-valid {
+            font-size: 24px;
+            color: #00e676;
+            margin-bottom: 20px;
+        }
+
+        .status-invalid {
+            font-size: 24px;
+            color: #ff4c4c;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 500px) {
+            .box {
+                padding: 30px 20px;
+            }
+
+            .btn {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        {% if result == "yes" %}
+            <h2 class="status-valid">✅ Certificate is VALID</h2>
+        {% else %}
+            <h2 class="status-invalid">❌ Certificate is INVALID</h2>
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn">Go to Home</a>
+        <a href="{% url 'verify_certificate' %}" class="btn">Verify Another</a>
+    </div>
+</body>
+</html>

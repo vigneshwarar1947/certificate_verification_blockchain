@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Certificate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/static/images/back.png'); /* Ensure image exists */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Optional animated overlay */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #00d9ff;
+        }
+
+        .datetime {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+        }
+
+        .custom-file-input {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            padding: 15px 30px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            transition: background 0.4s ease;
+            margin-bottom: 20px;
+        }
+
+        .custom-file-input:hover {
+            background: linear-gradient(45deg, #0056b3, #00aaff);
+        }
+        
+
+        .custom-file-input input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 15px 35px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1e7e34;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #ffcdd2;
+        }
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 28px;
+            }
+
+            .icon {
+                font-size: 40px;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="fas fa-certificate icon"></i>
+        <h2>Verify Certificate</h2>
+        <div class="datetime" id="datetime">Loading date & time...</div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="custom-file-input">
+                Choose Certificate
+                <input type="file" name="certificate_file" required>
+            </label><br>
+
+            <button type="submit">Verify</button>
+        </form>
+
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('datetime').innerText = now.toLocaleString('en-IN', options);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
